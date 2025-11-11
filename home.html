@@ -187,12 +187,12 @@ const firebaseConfig = {
 
     // Cash out buttons logic
     document.getElementById('cashOutPhoneBtn').addEventListener('click', () => {
-      window.location.href = 'https://paystack.shop/pay/f9u3zvc5oy';
+      window.location.href = 'https://paystack.shop/pay/xdeqbj4rwk';
     });
     document.getElementById('cashOutBankBtn').addEventListener('click', () => {
       const bank = prompt('Select bank: Cooperative Bank, KCB Bank or Absa Bank');
       if (bank && (bank.toLowerCase().includes('cooperative') || bank.toLowerCase().includes('kcb') || bank.toLowerCase().includes('absa'))) {
-        window.location.href = 'https://paystack.shop/pay/f9u3zvc5oy';
+        window.location.href = 'https://paystack.shop/pay/xdeqbj4rwk';
       } else {
         alert('Invalid bank selected');
       }
@@ -202,5 +202,6 @@ const firebaseConfig = {
 
 </body>
 </html>
+
 
 
