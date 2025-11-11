@@ -159,7 +159,7 @@ const firebaseConfig = {
     document.getElementById('logoutLink').addEventListener('click', e => {
       e.preventDefault();
       signOut(auth).then(() => {
-        window.location.href = "signin.html";
+        window.location.href = "https://applyloan.github.io/signin/signin";
       }).catch(error => {
         console.error("Sign‑Out Error", error);
       });
@@ -202,3 +202,4 @@ const firebaseConfig = {
 
 </body>
 </html>
+
